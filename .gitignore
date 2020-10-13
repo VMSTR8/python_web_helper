@@ -6,3 +6,4 @@ venv/
 web_helper/secrets.py
 db.py
 urls_final.json
+templates/search_bk.html

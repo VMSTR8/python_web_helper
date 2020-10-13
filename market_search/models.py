@@ -18,6 +18,7 @@ from django.db import models
 #         verbose_name_plural = 'В множественном'
 #         ordering = ['join_date', 'username']
 
+# Model of market items
 class Items(models.Model):
     item_name = models.CharField(max_length=255)
     in_stock = models.BooleanField(default=False)
