@@ -1,9 +1,10 @@
-.idea/
 *.sqlite3
+**.json
+.idea/
 venv/
 **/__pycache__/
 **/.DS_Store
 web_helper/secrets.py
 db.py
-urls_final.json
 templates/search_bk.html
+webpage_parser.py
