@@ -1,11 +1,10 @@
 <h2>Результаты поиска:</h2>
 <ul>
     {% for items in object_list %}
-        {% if forloop.counter == 1 %}
-        Магазин: {{ items.store_name }}
-        {% endif %}
-    <li>
+        <div>{% ifchanged %}{{ items.store_name }}{% endifchanged %}</div>
+
+        <li>
         Название товара: <a target="_blank" href={{ items.link }}>{{ items.item_name }}</a>
-    </li>
+        </li>
     {% endfor %}
 </ul>
