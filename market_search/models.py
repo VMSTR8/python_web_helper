@@ -3,24 +3,21 @@ from django.db import models
 # Create your models here.
 
 
-# class Users(models.Model):
-#     username = models.CharField(max_length=25)
-#     full_name = models.CharField(blank=True)
-#     password = models.CharField()
-#     join_date = models.DateTimeField(auto_now_add=True)
-#     is_active = models.BooleanField(default=True)
-#
-#     def __str__(self):
-#         return self.full_name
-#
-#     class Meta:
-#         verbose_name = "В единственном числе"
-#         verbose_name_plural = 'В множественном'
-#         ordering = ['join_date', 'username']
+# TODO добавить колонку цены в модель
+# TODO Нужно ли делать сколько % скидка команды?
+# TODO Продумать модель, что еще добавить
+# TODO Добавить колонку с логотипами магазинов
 
 # Model of market items
 class Items(models.Model):
-    item_name = models.CharField(max_length=255)
-    in_stock = models.BooleanField(default=False)
-    link = models.TextField()
-    store_name = models.CharField(max_length=30)
+    item_name = models.CharField(max_length=255, verbose_name='Наименование товара')
+    in_stock = models.BooleanField(default=False, verbose_name='Наличие')
+    link = models.TextField(verbose_name='Ссылка')
+    store_name = models.CharField(max_length=30, verbose_name='Наименование магазина')
+
+    def __str__(self):
+        return self.item_name
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'

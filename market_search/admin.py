@@ -5,7 +5,7 @@ from .models import Items
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('item_name', 'in_stock', 'link', 'store_name')
+    list_display = ('id', 'item_name', 'in_stock', 'link', 'store_name')
 
 
 admin.site.register(Items, ItemAdmin)

@@ -5,6 +5,7 @@ from django.db.models import Q
 
 from .models import *
 
+
 # Create your views here.
 
 
@@ -26,8 +27,7 @@ class SearchResultView(ListView):
     # Function that implements search through parameters
     def get_queryset(self):
         query = self.request.GET.get('q')
-        if not query == '':
-            object_list = Items.objects.filter(Q(store_name__icontains=query) | Q(item_name__icontains=query))
-            return object_list
-        else:
-            return None
+        object_list = Items.objects \
+            .filter(Q(store_name__icontains=query) | Q(item_name__icontains=query)) \
+            .filter(in_stock=True)
+        return object_list
