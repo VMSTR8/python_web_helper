@@ -1,14 +1,14 @@
-<h2>Результаты поиска:</h2>
-<ul>
-    {% for items in object_list %}
-        <div>{% ifchanged %}<h4><center>{{ items.store_name }}</center></h4>{% endifchanged %}</div>
+{% for items in object_list %}
+    {% ifchanged %}<h2>Что удалось найти:</h2>{% endifchanged %}
+    <div>{% ifchanged %}<h4 align="center">{{ items.store_name }}</h4>{% endifchanged %}</div>
 
-        <li>
-        Название товара: <a target="_blank" href={{ items.link }}>{{ items.item_name }}</a>
-        </li>
-    {% empty %}
-        <li>
-        Пусто
-        </li>
-    {% endfor %}
-</ul>
+    <li>
+        Название товара: <a target="_blank" href={{ items.link }}>{{ items.item_name }}</a>. Цена: {{ items.price }}
+        руб.
+    </li>
+
+{% empty %}
+    <div>
+        Поиск не дал результатов.
+    </div>
+{% endfor %}
