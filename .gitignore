@@ -12,4 +12,3 @@ parser.v2.py
 **/migrations/
 market_search/manager.py
 parser.py
-stores_parser.py

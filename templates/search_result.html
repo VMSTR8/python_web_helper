@@ -1,10 +1,18 @@
-{% for items in object_list %}
+<form method="GET">
+{{ filter.form }}
+    <button type="submit" class="btn btn-primary">Применить</button>
+</form>
+{% for items in filter.qs %}
     {% ifchanged %}<h2>Что удалось найти:</h2>{% endifchanged %}
     <div>{% ifchanged %}<h4 align="center">{{ items.store_name }}</h4>{% endifchanged %}</div>
 
     <li>
-        Название товара: <a target="_blank" href={{ items.link }}>{{ items.item_name }}</a>. Цена: {{ items.price }}
-        руб.
+        Название товара: <a target="_blank" href={{ items.link }}>{{ items.item_name }}</a>
+        {% if items.price %}
+            Цена: {{ items.price }} руб.
+        {% else %}
+            Цена доступна только на сайте
+        {% endif %}
     </li>
 
 {% empty %}

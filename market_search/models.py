@@ -8,7 +8,7 @@ class Items(models.Model):
     item_name = models.CharField(max_length=255, unique=True, verbose_name='Наименование товара')
     in_stock = models.BooleanField(default=False, verbose_name='Наличие')
     link = models.TextField(verbose_name='Ссылка')
-    price = models.IntegerField(blank=True, null=True, verbose_name='Цена магазина')
+    price = models.IntegerField(null=True, blank=True, verbose_name='Цена магазина')
     store_name = models.CharField(max_length=30, verbose_name='Наименование магазина')
     category = models.ForeignKey('Categories', on_delete=models.PROTECT, null=True, blank=True,
                                  verbose_name='Категория')

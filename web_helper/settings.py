@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'market_search.apps.MarketSearchConfig',
+    'django_filters',
 ]
 
 

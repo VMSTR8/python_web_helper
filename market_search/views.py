@@ -4,15 +4,14 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.contrib.postgres.search import TrigramSimilarity
 
+from market_search.filter import *
+
 from .models import Items
-
-
-# Create your views here.
 
 
 # Homepage
 def index(request):
-    return HttpResponse('Привет, мир!')
+    return HttpResponse('Blank page')
 
 
 # Search page
@@ -36,3 +35,8 @@ class SearchResultView(ListView):
         object_list = Items.objects.filter(search_vector=query).filter(in_stock=True).order_by(
             'store_name', 'price')
         return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = ItemsFilter(self.request.GET, queryset=self.get_queryset())
+        return context
