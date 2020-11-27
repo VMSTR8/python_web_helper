@@ -1,8 +1,12 @@
-from django.urls import path, re_path
+from django.urls import path
+from django.conf.urls import url
+
 from .views import *
+from market_search import views
 
 urlpatterns = [
-    path('', index),
     path('search/', search),
-    re_path(r'^search/results/$', SearchResultView.as_view(), name='search_result'),
+    path('search/result/', SearchResultView.as_view(), name='search_result'),
+
+    url(r'^dbwrite/$', views.dbwrite),
 ]

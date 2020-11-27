@@ -1,6 +1,7 @@
 <form method="GET">
 {{ filter.form }}
-    <button type="submit" class="btn btn-primary">Применить</button>
+    <!-- Не работает скрипт на отлавливание query, разобраться -->
+    <button name="q" onclick="getQueryStringValue()" type="submit" class="btn btn-primary">Применить</button>
 </form>
 {% for items in filter.qs %}
     {% ifchanged %}<h2>Что удалось найти:</h2>{% endifchanged %}
@@ -20,3 +21,11 @@
         Поиск не дал результатов.
     </div>
 {% endfor %}
+
+<script>
+function getQueryStringValue () {
+  let querystring = window.location.search.substring(1);
+  querystring = querystring.replace("?", "");
+  alert(querystring);
+}
+</script>

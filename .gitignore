@@ -1,14 +1,27 @@
-*.sqlite3
-**.json
-.idea/
-venv/
+# Мусор
 **/__pycache__/
 **/.DS_Store
-web_helper/secrets.py
-db.py
-templates/search_bk.html
-webpage_parser.py
-parser.v2.py
-**/migrations/
+.idea/
 market_search/manager.py
+templates/search_bk.html
+
+# Базы данных
+*.sqlite3
+db.py
+
+# Нежелательные форматы данных
+**.json
+
+# Вирутальное окружение
+venv/
+
+# Файлы миграций
+**/migrations/
+
+# Секреты
+web_helper/secrets.py
+
+# Файлы парсеры, которые тестировали
+webpage_parser.py
 parser.py
+parser.v2.py

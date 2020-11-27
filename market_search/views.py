@@ -1,9 +1,11 @@
-from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import ListView
-from django.contrib.postgres.search import TrigramSimilarity
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+from market_search.serializer import *
 from market_search.filter import *
 
 from .models import Items
@@ -40,3 +42,11 @@ class SearchResultView(ListView):
         context = super().get_context_data(**kwargs)
         context['filter'] = ItemsFilter(self.request.GET, queryset=self.get_queryset())
         return context
+
+
+# Endpoint
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def dbwrite(request):
+    serializer = DatabaseSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
