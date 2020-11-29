@@ -25,7 +25,10 @@ class AirsoftstoreParser(Parser):
         description = ''
         discount = ''
         logo = ''
-        html = self.get_html().find('ul', class_='thumbnails').findAll('li', class_='span3')
+        html = self.get_html().find(
+            'div', class_='special category').find(
+            'ul', class_='thumbnails').findAll(
+            'li', class_='span3')
         for i in html:
             item_pic = i.find('div', class_='prodpic').find('img')
             item_pic = self.link[:27] + item_pic['data-src']
@@ -46,6 +49,9 @@ class AirsoftstoreParser(Parser):
 
 if __name__ == '__main__':
     url = ['https://www.airsoftstore.ru/oruzhie/m-seriia?showall=999999',
-           'https://www.airsoftstore.ru/oruzhie/ak-seriia?showall=999999']
+           'https://www.airsoftstore.ru/oruzhie/ak-seriia?showall=999999',
+           'https://www.airsoftstore.ru/snariazhenie/shlemy?showall=999999',
+           'https://www.airsoftstore.ru/snariazhenie/takticheskie-zhilety?showall=999999',
+           'https://www.airsoftstore.ru/snariazhenie/takticheskie-zhilety/bronepaneli?showall=999999']
     for i in url:
         print(AirsoftstoreParser(i).parser())
