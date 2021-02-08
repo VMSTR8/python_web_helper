@@ -1,14 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.views.generic import ListView
+from django.views.decorators.csrf import csrf_exempt
 
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import JSONParser
 
-from market_search.serializer import *
+from market_search.serializer import ItemsSerializer
 from market_search.filter import *
 
-from .models import Items
+from market_search.models import Items
 
 
 # Homepage
@@ -44,9 +44,22 @@ class SearchResultView(ListView):
         return context
 
 
-# Endpoint
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def dbwrite(request):
-    serializer = DatabaseSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
+@csrf_exempt
+def write_to_db(request):
+
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ItemsSerializer(data=data)
+        print(data)
+        if serializer.is_valid():
+            instance, created = Items.objects.update_or_create(
+                item_name=serializer.validated_data.get('item_name', None),
+                defaults=serializer.validated_data
+            )
+            if not created:
+                serializer.update(instance, serializer.validated_data)
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+    else:
+        return HttpResponseNotAllowed('Method Not Allowed')
