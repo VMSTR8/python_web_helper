@@ -1,23 +1,16 @@
 from rest_framework import serializers
+from market_search.models import Items
 
 
-class Database:
-    def __init__(self, item_pic, item_name, link, price, in_stock):
-        self.item_pic = item_pic
-        self.item_name = item_name
-        self.link = link
-        self.price = price
-        self.in_stock = in_stock
-
-
-class DatabaseSerializer(serializers.Serializer):
-    item_pic = serializers.CharField()
+class ItemsSerializer(serializers.Serializer):
     item_name = serializers.CharField(max_length=255)
     link = serializers.URLField()
-    price = serializers.IntegerField(min_value=0)
-    in_stock = serializers.BooleanField()
 
+    def create(self, validated_data):
+        return Items.objects.create(**validated_data)
 
-# def validate(date):
-#     serializer = DatabaseSerializer(data=date)
-#     serializer.is_valid(raise_exception=True)
+    def update(self, instance, validated_data):
+        instance.item_name = validated_data.get('item_name', instance.item_name)
+        instance.link = validated_data.get('link', instance.link)
+        instance.save()
+        return instance
