@@ -3,6 +3,7 @@
 **/.DS_Store
 .idea/
 market_search/manager.py
+market_search/permisiions.py
 templates/search_bk.html
 
 # Базы данных
