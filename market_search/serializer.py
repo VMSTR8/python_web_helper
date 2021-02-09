@@ -1,16 +1,18 @@
 from rest_framework import serializers
-from market_search.models import Items
+from market_search.models import Items, Categories, Stores
 
 
-class ItemsSerializer(serializers.Serializer):
-    item_name = serializers.CharField(max_length=255)
-    link = serializers.URLField()
+class ItemsSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(queryset=Categories.objects.all(), slug_field='title')
+    store = serializers.SlugRelatedField(queryset=Stores.objects.all(), slug_field='title')
 
-    def create(self, validated_data):
-        return Items.objects.create(**validated_data)
+    class Meta:
 
-    def update(self, instance, validated_data):
-        instance.item_name = validated_data.get('item_name', instance.item_name)
-        instance.link = validated_data.get('link', instance.link)
-        instance.save()
-        return instance
+        model = Items
+        fields = ['item_pic',
+                  'item_name',
+                  'in_stock',
+                  'link',
+                  'price',
+                  'category',
+                  'store']
