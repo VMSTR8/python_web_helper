@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'market_search.apps.MarketSearchConfig',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
 ]
 
@@ -139,3 +140,12 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDER_CLASSES': (
+        'rest_framework.renderers.JSONRender',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
