@@ -4,6 +4,9 @@ from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.parsers import JSONParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
+from rest_framework.decorators import api_view, permission_classes, renderer_classes
 
 from market_search.serializer import ItemsSerializer
 from market_search.filter import *
@@ -44,6 +47,9 @@ class SearchResultView(ListView):
         return context
 
 
+@api_view(['POST'])
+@renderer_classes([JSONRenderer])
+@permission_classes([IsAuthenticated])
 @csrf_exempt
 def write_to_db(request):
 
