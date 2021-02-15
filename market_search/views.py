@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse, HttpResponseNotAllowed
 from django.views.generic import ListView
@@ -55,17 +57,12 @@ def write_to_db(request):
 
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = ItemsSerializer(data=data)
+        serializer = ItemsSerializer(data=data, many=True)
         print(data)
         if serializer.is_valid():
-            instance, created = Items.objects.update_or_create(
-                item_name=serializer.validated_data.get('item_name', None),
-                defaults=serializer.validated_data
-            )
-            if not created:
-                serializer.update(instance, serializer.validated_data)
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            serializer.save()
+            return JsonResponse(serializer.data, status=201, safe=False)
+        return JsonResponse(serializer.errors, status=400, safe=False)
 
     else:
         return HttpResponseNotAllowed('Method Not Allowed')
