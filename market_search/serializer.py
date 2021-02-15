@@ -16,3 +16,10 @@ class ItemsSerializer(serializers.ModelSerializer):
                   'price',
                   'category',
                   'store']
+
+    def create(self, validated_data):
+        item, created = Items.objects.update_or_create(
+            item_name=validated_data.get('item_name', None),
+            defaults=validated_data
+        )
+        return item
